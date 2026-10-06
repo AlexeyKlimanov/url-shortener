@@ -18,7 +18,7 @@ public class UserService{
     public UserResponse register(RegisterRequest request){
         String email = request.email();
 
-        if(userRepository.existsEmail(email)){
+        if(userRepository.existsByEmail(email)){
             throw new IllegalArgumentException("Email уже занят!");
         }
 
