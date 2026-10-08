@@ -1,8 +1,23 @@
-### Регистрация пользователя
-POST http://localhost:8080/api/auth/register
+POST http://localhost:8080/api/auth/login
 Content-Type: application/json
 
 {
-    "email": "alexey@mail.ru",
-    "password": "secret123"
+  "email": "alex@mail.ru",
+  "password": "secret123"
+}
+
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "alex@mail.ru",
+  "password": "wrong"
+}
+
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "not-an-email",
+  "password": ""
 }
