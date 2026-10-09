@@ -1,8 +1,36 @@
-### Регистрация пользователя
 POST http://localhost:8080/api/auth/register
 Content-Type: application/json
 
+{ "email": "test@mail.ru", "password": "password123" }
+
+###
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{ "email": "test@mail.ru", "password": "password123" }
+
+###
+# @name login
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
 {
-    "email": "alexey@mail.ru",
-    "password": "secret123"
+  "email": "test@mail.ru",
+  "password": "password123"
+}
+
+###
+GET http://localhost:8080/hello
+
+###
+GET http://localhost:8080/hello
+Authorization: Bearer {{login.response.body.$.token}}
+
+###
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@mail.ru",
+  "password": "wrong_password"
 }
