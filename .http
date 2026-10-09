@@ -11,3 +11,12 @@ Content-Type: application/json
 
 ###
 GET http://localhost:8080/api/links
+
+###
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@mail.ru",
+  "password": "wrong_password"
+}
