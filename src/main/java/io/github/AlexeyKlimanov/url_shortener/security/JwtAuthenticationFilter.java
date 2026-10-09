@@ -15,9 +15,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter{
     private static final String AUTH_HEADER = "Authorization";
     private static final String BEARER_PREFIX = "Bearer ";
@@ -38,9 +40,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
         }
 
         final String jwt = authHeader.substring(BEARER_PREFIX.length());
-        final String email = jwtService.extractUsername(jwt);
-
+        
         try{
+            final String email = jwtService.extractUsername(jwt);
+            
             if(email != null && SecurityContextHolder.getContext().getAuthentication() == null){
                 UserDetails userDetails = userDetailsService.loadUserByUsername(email);
     
@@ -57,7 +60,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
                 }
             }
         } catch(Exception ex){
-            System.err.println("JWT validation failed: " + ex.getMessage());
+            log.warn("JWT validation failed: {}", ex.getMessage());
         }
 
         filterChain.doFilter(request, response);
