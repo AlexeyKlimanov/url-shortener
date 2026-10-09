@@ -1,23 +1,13 @@
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{ "email": "test@mail.ru", "password": "password123" }
+
+###
 POST http://localhost:8080/api/auth/login
 Content-Type: application/json
 
-{
-  "email": "alex@mail.ru",
-  "password": "secret123"
-}
+{ "email": "test@mail.ru", "password": "password123" }
 
-POST http://localhost:8080/api/auth/login
-Content-Type: application/json
-
-{
-  "email": "alex@mail.ru",
-  "password": "wrong"
-}
-
-POST http://localhost:8080/api/auth/login
-Content-Type: application/json
-
-{
-  "email": "not-an-email",
-  "password": ""
-}
+###
+GET http://localhost:8080/api/links
