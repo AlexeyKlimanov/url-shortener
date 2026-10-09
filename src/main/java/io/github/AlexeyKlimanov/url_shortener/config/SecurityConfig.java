@@ -18,6 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import io.github.AlexeyKlimanov.url_shortener.security.CustomUserDetailsService;
 import io.github.AlexeyKlimanov.url_shortener.security.JwtAuthenticationFilter;
+import io.github.AlexeyKlimanov.url_shortener.security.RestAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
@@ -25,13 +26,17 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
     private final CustomUserDetailsService customUserDetailsService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/error").permitAll()
                 .anyRequest().authenticated()
+            ).exceptionHandling(exception -> exception
+                    .authenticationEntryPoint(restAuthenticationEntryPoint)
             ).sessionManagement(session -> session
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             ).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
