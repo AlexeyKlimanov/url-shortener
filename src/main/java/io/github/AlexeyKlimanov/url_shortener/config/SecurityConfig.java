@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.http.HttpMethod;
 
 import io.github.AlexeyKlimanov.url_shortener.security.CustomUserDetailsService;
 import io.github.AlexeyKlimanov.url_shortener.security.JwtAuthenticationFilter;
@@ -34,6 +35,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/error").permitAll()
+                .requestMatchers(HttpMethod.GET, "/{code:[a-zA-Z0-9]{4,10}}").permitAll()
                 .anyRequest().authenticated()
             ).exceptionHandling(exception -> exception
                     .authenticationEntryPoint(restAuthenticationEntryPoint)
